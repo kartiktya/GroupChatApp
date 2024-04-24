@@ -8,7 +8,7 @@ const userController = require('../controllers/user');
 const router = express.Router();
 
 router.post('/signup', userController.signup);
-// router.post('/login', userController.login);
+router.post('/login', userController.login);
 // router.get('/getUser', userAuthentication.authenticate, userController.getUser);
 // router.get('/downloadExpense', userAuthentication.authenticate, expenseController.downloadExpense);
 // router.get('/viewExpenseFilesDownloaded', userAuthentication.authenticate, expenseController.viewExpenseFilesDownloaded);

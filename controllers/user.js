@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 
 exports.signup =  async (req, res, next) => {
@@ -43,46 +43,46 @@ exports.signup =  async (req, res, next) => {
 }
 
 
-// function generateAccessToken(id, name) {
-//     return jwt.sign( { userId: id, name: name }, '9djd0ndsidsds0sdnsddd0sjsdjndsjsds0snsdienugnihwie' );
-// }
+function generateAccessToken(id, name) {
+    return jwt.sign( { userId: id, name: name }, '9djd0ndsidsds0sdnsddd0sjsdjndsjsds0snsdienugnihwie' );
+}
 
-// exports.login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
 
-//     try {
+    try {
     
-//         const email = req.body.email;
-//         const password = req.body.password;
+        const email = req.body.email;
+        const password = req.body.password;
     
-//         const userExists = await User.findOne( { where: { email: email } } );
+        const userExists = await User.findOne( { where: { email: email } } );
         
-//         if(!userExists) {
-//             return res.status(404).json({ message:'User does not found' });
-//         }
+        if(!userExists) {
+            return res.status(404).json({ message:'User does not found' });
+        }
     
-//         bcrypt.compare(password, userExists.password, (err, result) => {
-//             if(result == true) {
-//                return res.status(200).json({ message: 'User logged in successfully', token: generateAccessToken(userExists.id, userExists.name), user: userExists });
-//             }
-//             else {
-//                 return res.status(400).json("Password is incorrect");
-//             }
-//         });
+        bcrypt.compare(password, userExists.password, (err, result) => {
+            if(result == true) {
+               return res.status(200).json({ message: 'User logged in successfully', token: generateAccessToken(userExists.id, userExists.name), user: userExists });
+            }
+            else {
+                return res.status(400).json("Password is incorrect");
+            }
+        });
     
        
-//         // else if(password!=userExists.password) {
-//         //     res.status(401).json("User not authorised");
-//         // }
-//         // else
-//         //     res.status(200).json("User logged in successfully");
+        // else if(password!=userExists.password) {
+        //     res.status(401).json("User not authorised");
+        // }
+        // else
+        //     res.status(200).json("User logged in successfully");
     
     
-//     }
-//     catch(err) {
-//         res.status(500).json({error: err});
-//      }
+    }
+    catch(err) {
+        res.status(500).json({error: err});
+     }
     
-// }
+}
 
 
 // exports.getUser = async (req, res, next) => {
