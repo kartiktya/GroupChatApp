@@ -23,7 +23,12 @@ const app = express();
 //     { flags: 'a' }
 // );
 
-app.use(cors());
+app.use(cors( {
+
+    origin: '*',
+
+}));
+
 //app.use(helmet());
 // app.use(helmet({
 //     contentSecurityPolicy: false,
