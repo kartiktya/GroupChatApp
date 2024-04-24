@@ -4,11 +4,13 @@ function handleFormSubmit(event) {
 
     const name = event.target.name.value;
     const email = event.target.email.value;
+    const phone = event.target.phone.value;
     const password = event.target.password.value;
 
     let userObject = {
         name: name,
         email: email,
+        phone: phone,
         password: password
     };
 
