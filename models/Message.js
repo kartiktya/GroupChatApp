@@ -13,6 +13,10 @@ const Message = sequelize.define('message', {
       type: Sequelize.STRING,
       //allowNull: false
   },
+  userName: {
+    type: Sequelize.STRING,
+    allowNull: false
+},
 
   });
   

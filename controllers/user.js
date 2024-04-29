@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Message = require('../models/Message');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -98,4 +99,49 @@ exports.getUser = async (req, res, next) => {
     //const data = await User.findAll({ where : { isActive : true } });
     const user = req.user;
     res.status(200).json({ user: user });
+}
+
+
+
+exports.addMessage = async (req, res, next) => { 
+
+    const userId = req.params.userId;
+    const message = req.body.message;
+
+    console.log(userId);
+    console.log(message);
+    const data = await Message.create({  
+        message: message,
+        userName : req.user.name,
+        userId : userId
+    });
+
+    res.status(201).send({ newMessageDetail: data});
+
+}
+
+
+exports.getMessages = async (req, res, next) => { 
+
+    const userId = req.params.userId;
+              //console.log("11111111");
+              
+              
+            //   Message.findByPk(userId)
+            //   .then(message => {
+            //     //   console.log(userId);
+            //     //   console.log(message);
+            //       return message;
+            //   })
+            //   .then(result => {
+            //       res.status(200).send({ allMessages : result});
+            //   })
+            //   .catch(err => console.log(err));
+
+
+            const allMessages = await  Message.findAll();
+
+            res.status(200).send({ allMessages : allMessages});
+      
+
 }
