@@ -10,7 +10,8 @@ var cors = require('cors');
 
 const sequelize = require('./util/database.js');
 
-// const User = require('./models/User.js');
+const User = require('./models/User.js');
+const Message = require('./models/Message.js');
 // const Expense = require('./models/Expense.js');
 // const Order = require('./models/Order.js');
 // const forgotPasswordRequest = require('./models/ForgotPasswordRequest.js');
@@ -62,6 +63,9 @@ app.use('/user', userRoutes);
 //      res.sendFile(path.join(__dirname, `public/${req.url}`));
 //     //res.sendFile(path.join(__dirname, `public/login/login.html`));
 // });
+
+User.hasMany(Message);
+Message.belongsTo(User);
 
 // User.hasMany(Expense);
 // Expense.belongsTo(User);

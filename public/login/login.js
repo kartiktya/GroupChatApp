@@ -17,7 +17,7 @@ function handleLoginSubmit(event) {
         if(response.status===200)
         alert('User logged in successfully');
         localStorage.setItem('token', response.data.token);
-        //window.location.href = '../expense/expense.html';
+        window.location.href = '../chat/chat.html';
 
         // const childToDelete = document.getElementById('rzp-button1');
         // const parentElement = document.querySelector('b');

@@ -2,6 +2,7 @@ const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { where } = require('sequelize');
 
 
 exports.signup =  async (req, res, next) => {
@@ -62,6 +63,7 @@ exports.login = async (req, res, next) => {
     
         bcrypt.compare(password, userExists.password, (err, result) => {
             if(result == true) {
+                User.update({ isActive: true}, { where: { id : userExists.id } });
                return res.status(200).json({ message: 'User logged in successfully', token: generateAccessToken(userExists.id, userExists.name), user: userExists });
             }
             else {
@@ -85,7 +87,9 @@ exports.login = async (req, res, next) => {
 }
 
 
-// exports.getUser = async (req, res, next) => {
-//     const user = req.user;
-//     res.status(200).json({ user: user });
-// }
+exports.getUser = async (req, res, next) => {
+    const data = await User.findAll({ where : { isActive : true } });
+    //const user = req.user;
+    console.log(data);
+    res.status(200).json({ user: data });
+}
