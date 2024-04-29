@@ -87,9 +87,15 @@ exports.login = async (req, res, next) => {
 }
 
 
-exports.getUser = async (req, res, next) => {
+exports.getUsers = async (req, res, next) => {
     const data = await User.findAll({ where : { isActive : true } });
     //const user = req.user;
     console.log(data);
     res.status(200).json({ user: data });
+}
+
+exports.getUser = async (req, res, next) => {
+    //const data = await User.findAll({ where : { isActive : true } });
+    const user = req.user;
+    res.status(200).json({ user: user });
 }

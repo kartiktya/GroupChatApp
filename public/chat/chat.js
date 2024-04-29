@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded",  async () => {
 
     const token = localStorage.getItem('token');
 
-    const response1 = await axios.get("http://localhost:3000/user/getUser", { headers: { 'Authorization': token } })
+    const response1 = await axios.get("http://localhost:3000/user/getUsers", { headers: { 'Authorization': token } })
     //.then((response1) => {
         console.log(response1);
 
@@ -33,6 +33,28 @@ function showActiveUsers(data) {
 
     }
 
+
+
+    const token = localStorage.getItem('token');
+
+    axios.get("http://localhost:3000/user/getUser", { headers: { 'Authorization': token } })
+    .then((response) => {
+
+        console.log(response.data.user.name);
+
+        const newLi1 = document.createElement('li');
+        const newInput = document.createElement('input');
+
+        newLi1.innerHTML = `${response.data.user.name}:`;
+        newLi1.appendChild(newInput);
+
+        ul.appendChild(newLi1);
+
+
+    })
+    .catch((err) => console.log(err));
+
+    
 }
 
 
