@@ -6,6 +6,11 @@ window.addEventListener("DOMContentLoaded",  async () => {
     const response1 = await axios.get("http://localhost:3000/user/getUsers", { headers: { 'Authorization': token } });
 
     
+    //setTimeInterval(() => call Api , 1000)
+    setTimeInterval(() => {
+
+    }, 1000)
+
     const user1 = await axios.get("http://localhost:3000/user/getUser", { headers: { 'Authorization': token } });
     //console.log(user1.data.user.id);
     const userId = user1.data.user.id;
