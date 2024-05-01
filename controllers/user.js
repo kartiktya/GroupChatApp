@@ -123,7 +123,6 @@ exports.addMessage = async (req, res, next) => {
 
 exports.getMessages = async (req, res, next) => { 
 
-    const userId = req.params.userId;
               //console.log("11111111");
               
               
