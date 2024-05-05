@@ -12,8 +12,8 @@ const sequelize = require('./util/database.js');
 
 const User = require('./models/User.js');
 const Message = require('./models/Message.js');
-// const Expense = require('./models/Expense.js');
-// const Order = require('./models/Order.js');
+const Group = require('./models/Group.js');
+
 // const forgotPasswordRequest = require('./models/ForgotPasswordRequest.js');
 // const ExpenseFilesDownloaded = require('./models/ExpenseFilesDownloaded.js');
 
@@ -37,9 +37,6 @@ app.use(cors( {
 // app.use(morgan('combined', { stream: accessLogStream }));
 
 const userRoutes = require('./routes/user.js');
-// const expenseRoutes = require('./routes/expense.js');
-// const purchaseRoutes = require('./routes/purchase.js');
-// const premiumRoutes = require('./routes/premium.js');
 // const passwordRoutes = require('./routes/password.js');
 
 
@@ -47,9 +44,6 @@ app.use(bodyParser.json({ extended: false }));
 
 
 app.use('/user', userRoutes);
-// app.use('/expense', expenseRoutes);
-// app.use('/purchase', purchaseRoutes);
-// app.use('/premium', premiumRoutes);
 // app.use('/password', passwordRoutes);
 
 // app.use('/', (req, res, next) => {
@@ -67,21 +61,19 @@ app.use('/user', userRoutes);
 User.hasMany(Message);
 Message.belongsTo(User);
 
-// User.hasMany(Expense);
-// Expense.belongsTo(User);
+User.belongsToMany(Group, { through: 'userGroup' });
+Group.belongsToMany(User, { through: 'userGroup' });
 
-// User.hasMany(Order);
-// Order.belongsTo(User);
+Group.hasMany(Message);
+Message.belongsTo(Group);
 
 // User.hasMany(forgotPasswordRequest);
 // forgotPasswordRequest.belongsTo(User);
 
-// User.hasMany(ExpenseFilesDownloaded);
-// ExpenseFilesDownloaded.belongsTo(User);
 
 sequelize
-.sync()
-//.sync({force: true})
+//.sync()
+.sync({force: true})
 .then()
 .catch(err => console.log(err));
 
