@@ -37,14 +37,14 @@ app.use(cors( {
 // app.use(morgan('combined', { stream: accessLogStream }));
 
 const userRoutes = require('./routes/user.js');
-// const passwordRoutes = require('./routes/password.js');
+const passwordRoutes = require('./routes/password.js');
 
 
 app.use(bodyParser.json({ extended: false }));
 
 
 app.use('/user', userRoutes);
-// app.use('/password', passwordRoutes);
+app.use('/password', passwordRoutes);
 
 // app.use('/', (req, res, next) => {
 //     res.sendFile(path.join(__dirname, `public/index.html`));
@@ -72,8 +72,8 @@ Message.belongsTo(Group);
 
 
 sequelize
-//.sync()
-.sync({force: true})
+.sync()
+//.sync({force: true})
 .then()
 .catch(err => console.log(err));
 
