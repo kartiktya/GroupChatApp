@@ -1,34 +1,84 @@
-window.addEventListener("DOMContentLoaded",  async () => {
+var flag1;
+//window.addEventListener("DOMContentLoaded",  async () => {
 
-
-    const token = localStorage.getItem('token');
-
-    const response1 = await axios.get("http://localhost:3000/user/getUsers", { headers: { 'Authorization': token } });
-
+    // flag1 = true;
     
     //setTimeInterval(() => call Api , 1000)
-    setTimeInterval(() => {
+    //setInterval( async() => {
 
-    }, 1000)
+      
+        // const token = localStorage.getItem('token');
 
-    const user1 = await axios.get("http://localhost:3000/user/getUser", { headers: { 'Authorization': token } });
-    //console.log(user1.data.user.id);
-    const userId = user1.data.user.id;
+        // const response1 = await axios.get("http://localhost:3000/user/getUsers", { headers: { 'Authorization': token } });
 
-    const allMessages = await axios.get(`http://localhost:3000/user/getMessages/${userId}`,  { headers: {'Authorization': token} });
+        // const user1 = await axios.get("http://localhost:3000/user/getUser", { headers: { 'Authorization': token } });
+        // //console.log(user1.data.user.id);
+        // const userId = user1.data.user.id;
+
+        //const allMessages = await axios.get(`http://localhost:3000/user/getMessages/${userId}`,  { headers: {'Authorization': token} });
+        
+
+        const promiseTwo = new Promise(r => {
+            setInterval( async() => {
+                flag1 = true;
+                const token = localStorage.getItem('token');
+
+                 const response1 = await axios.get("http://localhost:3000/user/getUsers", { headers: { 'Authorization': token } });
+              r(response1);
+            }, 1000);
+          });
+          promiseTwo.then(x => {
+            showActiveUsers(x.data);
+
+            //showAllMessages(x);
+            //flag1 = false;
+            }); // will resolve once
+
+
+
+        const promiseOnce = new Promise(r => {
+            setInterval( async() => {
+                const token = localStorage.getItem('token');
+                const user1 = await axios.get("http://localhost:3000/user/getUser", { headers: { 'Authorization': token } });
+                 //console.log(user1.data.user.id);
+                const userId = user1.data.user.id;
+                const allMessages =  await axios.get(`http://localhost:3000/user/getMessages/${userId}`,  { headers: {'Authorization': token} });
+              r(allMessages);
+            }, 1000);
+          });
+          promiseOnce.then(x => {
+            //showActiveUsers(response1.data);
+
+            showAllMessages(x);
+            flag1 = false;
+            }); // will resolve once
+
+
+        // console.log(allMessages);
+
+        
+        // showActiveUsers(response1.data);
+
+        // showAllMessages(allMessages);
+        // // flag1 = false;
+
+        // const childToDelete = document.getElementById('activeUsers');
+        // const parentElement = childToDelete.parentElement;
+        // parentElement.removeChild(childToDelete);
+        // console.log(childToDelete.parentElement);
+
+
     
-        //console.log(response1);
 
-        console.log(allMessages);
-
-        showActiveUsers(response1.data);
-
-        showAllMessages(allMessages);
-
-} );
+//}, 5000 );
+//});
 
 
 function showActiveUsers(data) {
+
+    
+
+    if(flag1) {
 
     const ul = document.getElementById('activeUsers');
     console.log(ul);
@@ -106,12 +156,14 @@ function showActiveUsers(data) {
 
     })
     .catch((err) => console.log(err));
-
+    }
     
 }
 
+
 function showAllMessages(exitingMessages) {
 
+    if(flag1) {
     console.log(exitingMessages.data.allMessages.length);
 
     for(let i=0; i<exitingMessages.data.allMessages.length; i++) { 
@@ -126,5 +178,8 @@ function showAllMessages(exitingMessages) {
     }
 
 }
+
+}
+
 
 
